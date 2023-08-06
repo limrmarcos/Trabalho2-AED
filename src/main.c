@@ -13,6 +13,28 @@ struct sentinel {
 };
 typedef struct sentinel Sentinel;
 
+int countStudents( int* students, int studentsSize, int* sandwiches, int sandwichesSize );
+int pop( Sentinel* p );
+void push( Sentinel* p, int value );
+
+int main() {
+    int studentsSize = 0;
+    int students[MAX], sandwiches[MAX];
+    scanf( "%d", &studentsSize );
+    int sandwichesSize = studentsSize;
+
+    for( int i = 0; i < studentsSize; i++ ) {
+        scanf( "%d", &students[i] );
+    }
+    for( int i = 0; i < sandwichesSize; i++ ) {
+        scanf( "%d", &sandwiches[i] );
+    }
+    
+    int result = countStudents(students, studentsSize, sandwiches, sandwichesSize);
+    printf("%d\n", result);
+    return 0;
+}
+
 void push( Sentinel* p, int value ) {
     Node* newNode = ( Node* ) malloc ( sizeof( Node ) );
     newNode->info = value;
@@ -63,23 +85,4 @@ int countStudents( int* students, int studentsSize, int* sandwiches, int sandwic
 
     free( nStudent );
     return unableEat;
-}
-
-int main() {
-    int studentsSize = 0;
-    int students[MAX], sandwiches[MAX];
-
-    scanf( "%d", &studentsSize );
-
-    int sandwichesSize = studentsSize;
-    for( int i = 0; i < studentsSize; i++ ) {
-        scanf( "%d", &students[i] );
-    }
-    for( int i = 0; i < sandwichesSize; i++ ) {
-        scanf( "%d", &sandwiches[i] );
-    }
-    
-    int result = countStudents(students, studentsSize, sandwiches, sandwichesSize);
-    printf("%d\n", result);
-    return 0;
 }
