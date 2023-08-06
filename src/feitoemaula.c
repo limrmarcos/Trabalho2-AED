@@ -1,69 +1,45 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct node {
-    int info;
-    struct node* next;
-};
-typedef struct node Node;
+//Adicionar struct para facilitar? Ou vai dificultar?
 
-struct sentinel {
-    Node* first;
-    Node* last;
-};
-typedef struct sentinel Sentinel;
+int countStudents(int* students, int studentsSize, int* sandwiches, int sandwichesSize);
+int Pop( int* type, int size );
+void Push( int* type, int size, int value );
 
-void push( Sentinel* p, int value ) {
-    Node* newNode = ( Node* ) malloc ( sizeof( Node ) );
-    newNode->info = value;
-    newNode->next = NULL;
+int main( void ) {
+    int unableEat = 0;
+    int* students = ( int* ) malloc ( sizeof( int ) );
+    //Pedir a quantidade de alunos e a informação ou dar Push de estudante em estudante?
 
-    if( p->first == NULL ) {
-        p->first = newNode;
-        p->last = newNode;
-    } else {
-        p->last->next = newNode;
-        p->last = newNode;
-    }
-}
 
-int pop( Sentinel* p ) {
-    Node* temp = p->first;
-    int info = temp->info;
-    p->first = p->first->next;
-    free(temp);
-    return info;
+    //unableEat = countStudents( students, studentsSize, sandwiches, sandwichesSize );
+    printf( "%d students weren't able to eat!", unableEat );
+    return 0;
 }
 
 int countStudents( int* students, int studentsSize, int* sandwiches, int sandwichesSize ) {
-    int stackTop = 0, unableEat = 0;
-    Sentinel* nStudent = ( Sentinel* ) malloc ( sizeof( Sentinel ) );
-    nStudent->first = NULL;
-    nStudent->last = NULL;
+    int counter = 0;
 
-    for( int i = 0; i < studentsSize; i++  ) {
-        push( nStudent, students[i] );
-    }
+    if( students[0] != sandwiches[0] ) {
+        int student = Pop( students[0], studentsSize );
+        Push( students, student, studentsSize );
+    } else if( students[0] == sandwiches[0] ) {
+        Pop( students[0], studentsSize );
+        Pop( sandwiches[0], sandwichesSize );
+        //Com a struct ficaria mais fácil o controle do tamanho
+    } 
 
-    while( nStudent->first != NULL ) {
-        if( sandwiches[stackTop] == nStudent->first->info ) {
-            stackTop++;
-            pop( nStudent );
-        } else {
-            int value;
-            value = pop( nStudent );
-            push( nStudent, value );
-        }
+    if( sandwichesSize == 0 ) {
+        return studentsSize;
+        //parece muito exagerado usar esse return
     }
-    return unableEat;
 }
 
-int main() {
-    int students[] = {1, 1, 0, 0};
-    int sandwiches[] = {0, 1, 0, 1};
-    int studentsSize = 4;
-    int sandwichesSize = 4;
-    int result = countStudents(students, studentsSize, sandwiches, sandwichesSize);
-    printf("%d\n", result);
-    return 0;
+void Push( int* type, int size, int value ) {
+    //type[size] = value;
+}
+
+int Pop( int* type, int size ) {
+    
 }
